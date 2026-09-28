@@ -1,21 +1,12 @@
 import { BookOpenCheck, NotebookPen, MonitorCloud, ChartNoAxesCombined } from 'lucide-react'
 import { ContactForm } from '../components/ContactForm'
-
-const navItems = [
-  ['O que fazemos', '#o-que-fazemos'],
-  ['Nossos produtos', '#produtos'],
-  ['Quem somos', '#quem-somos'],
-  ['Entrar em contato', '#contato'],
-]
+import { Navbar } from '../components/Navbar'
 
 
 export default function Home() {
   return (
     <main>
-      <header className="topbar">
-        <a href="#inicio" className="brand" aria-label="Início"><span className="brand-mark">AF</span><span>Aero Field</span></a>
-        <nav aria-label="Menu principal">{navItems.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
-      </header>
+      <Navbar />
 
       <section id="inicio" className="section hero">
         <div className="hero-copy">
