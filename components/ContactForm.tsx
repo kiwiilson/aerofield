@@ -1,7 +1,14 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
 type BrazilianState = {
   id: number
@@ -89,7 +96,7 @@ export function ContactForm() {
 
       try {
         const response = await fetch(
-          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${form.state}/municipios?orderBy=nome`,
+          'https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + form.state + '/municipios?orderBy=nome',
         )
         if (!response.ok) throw new Error('Não foi possível carregar as cidades.')
         const data = (await response.json()) as BrazilianCity[]
@@ -122,24 +129,26 @@ export function ContactForm() {
     setError('')
 
     if (!supabase) {
-      setError('O Supabase não está configurado. Confira as variáveis no arquivo .env.local e reinicie o servidor.')
+      console.error('Supabase não configurado. Variáveis encontradas:', {
+        hasUrl: Boolean(supabaseUrl),
+        hasPublishableKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY),
+        hasAnonKey: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+      })
+      setError('O Supabase não está configurado. Confira NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY no .env.local e reinicie o servidor.')
       setStatus('error')
       return
     }
 
-    const location = form.city && form.state ? `${form.city}/${form.state}` : ''
-
     const { error: insertError } = await supabase.from('contatos').insert({
       name: form.name,
-      company: form.company,
+      company: form.company || null,
       email: form.email,
-      whatsapp: form.whatsapp,
+      whatsapp: form.whatsapp || null,
       state: form.state,
       state_name: selectedStateName,
       city: form.city,
-      location,
       interest: form.interest,
-      message: form.message,
+      message: form.message || null,
     })
 
     if (insertError) {

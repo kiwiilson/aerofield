@@ -8,6 +8,7 @@ const navItems = [
   ['Entrar em contato', '#contato'],
 ]
 
+
 export default function Home() {
   return (
     <main>
