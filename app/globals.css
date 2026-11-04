@@ -154,3 +154,21 @@ button:disabled { opacity: .65; cursor: not-allowed; }
   :root { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
 }
+
+/* Instagram — menu, contato e rodapé */
+.site-nav .nav-instagram { gap: 7px; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.contact-actions .button { margin-top: 0; }
+.button-instagram { background: var(--color-action); color: #fff; }
+.footer-instagram { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; }
+.footer a:focus-visible { outline: 3px solid var(--color-action); outline-offset: 4px; }
+/* Evita o cabeçalho apertado com a nova ação social. */
+@media (min-width: 981px) and (max-width: 1200px) {
+  .site-header { gap: 8px; }
+  .site-nav a { padding-inline: 7px; font-size: 10px; letter-spacing: .02em; }
+  .site-nav .nav-instagram span { display: none; }
+}
+@media (max-width: 980px) {
+  .site-nav:not(.is-open) { visibility: hidden; }
+  .site-nav.is-open { visibility: visible; max-height: calc(100dvh - 120px); overflow-y: auto; }
+}

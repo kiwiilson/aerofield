@@ -2,27 +2,29 @@ import { ArrowRight, BadgeCheck, BookOpenCheck, Building2, ChartNoAxesCombined, 
 import { ContactForm } from '../components/ContactForm'
 import { Navbar } from '../components/Navbar'
 import { WhatsAppButton } from '../components/WhatsAppButton'
+import { FaInstagram } from 'react-icons/fa';
+
 
 const whatsappUrl = 'https://wa.me/5511991908358'
 
 const services = [
   {
     icon: Building2,
-    name: 'Aero Field Deploy',
+    name: 'AirNex Deploy',
     title: 'Implantação completa de soluções DJI Dock.',
     text: 'Planejamento, configuração, instalação assistida, testes, documentação e treinamento inicial para colocar operações com DJI Dock em funcionamento com segurança e clareza.',
     detail: 'Para empresas que precisam sair da compra do equipamento e chegar a uma rotina operacional real.',
   },
   {
     icon: Wrench,
-    name: 'Aero Field Care',
+    name: 'AirNex Care',
     title: 'Suporte, manutenção e continuidade operacional.',
     text: 'Acompanhamento técnico para reduzir paradas, organizar rotinas, orientar manutenção, apoiar seguros e manter equipamentos, softwares e equipes prontos para operar.',
     detail: 'Para operações que não podem depender de improviso quando surge uma dúvida, falha ou mudança de processo.',
   },
   {
     icon: BookOpenCheck,
-    name: 'Aero Field Academy',
+    name: 'AirNex Academy',
     title: 'Capacitação técnica e comercial.',
     text: 'Treinamentos online e presenciais para operação, software, vendas consultivas, pré-venda técnica e uso prático das soluções DJI Enterprise.',
     detail: 'Para times que precisam entender o produto, explicar valor e usar a tecnologia com domínio.',
@@ -68,7 +70,7 @@ const products = [
     name: 'Matrice 400',
     category: 'Operações complexas',
     image: '/media/matrice400.jpg',
-    text: 'Equipamento para missões robustas, payloads avançados e operações de maior complexidades e exigência nos resultados.',
+    text: 'Equipamento para missões robustas, payloads avançados e operações de maior complexidade e exigência nos resultados.',
   },
   {
     name: 'Mavic 3M',
@@ -118,7 +120,7 @@ export default function Home() {
 
       <section id="inicio" className="hero-shell">
         <div className="hero-copy">
-          <p className="eyebrow">Aero Field • DJI Enterprise na prática</p>
+          <p className="eyebrow">AirNex • DJI Enterprise na prática</p>
           <h1>Do drone à operação.</h1>
           <p className="hero-lead">Implantamos, capacitamos e apoiamos empresas que querem transformar drones, Dock e softwares DJI Enterprise em operação real, equipe preparada e oportunidade de negócio.</p>
           <div className="hero-actions">
@@ -208,10 +210,10 @@ export default function Home() {
         <div className="team-copy">
           <p className="eyebrow">Quem somos</p>
           <h2>Visão comercial com proximidade técnica.</h2>
-          <p>A Aero Field nasce para apoiar empresas que querem aplicar soluções DJI Enterprise com menos incerteza. Atuamos entre campo, software, treinamento e estratégia para transformar tecnologia em operação.</p>
+          <p>A AirNex nasce para apoiar empresas que querem aplicar soluções DJI Enterprise com menos incerteza. Atuamos entre campo, software, treinamento e estratégia para transformar tecnologia em operação.</p>
         </div>
         <article className="founder-card">
-          <div className="founder-photo"><img src="/team/camila.jpg" alt="Camila Freitas, CEO da Aero Field" /></div>
+          <div className="founder-photo"><img src="/team/camila.jpg" alt="Camila Freitas, CEO da AirNex" /></div>
           <div><span>CEO</span><h3>Camila Freitas</h3><p>À frente da estratégia comercial e do relacionamento com clientes, conectando necessidade, proposta de valor e oportunidade.</p></div>
         </article>
       </section>
@@ -221,14 +223,17 @@ export default function Home() {
           <p className="eyebrow">Contato</p>
           <h2>Conte onde você quer chegar.</h2>
           <p>Preencha o formulário ou chame pelo WhatsApp. Vamos entender seu cenário e indicar se faz sentido seguir por implantação, suporte, capacitação ou desenvolvimento de mercado.</p>
+          <div className="contact-actions">
           <a className="button button-secondary" href={whatsappUrl} target="_blank" rel="noreferrer">Fale conosco pelo WhatsApp</a>
+          <a className="button button-instagram" href="https://www.instagram.com/airnexsolutions/" target="_blank" rel="noopener noreferrer"><FaInstagram size={20} aria-hidden="true" /> Siga @airnexsolutions</a>
+          </div>
         </div>
         <ContactForm />
       </section>
 
       <footer className="footer">
-        <div><strong>Aero Field</strong><p>Soluções DJI Enterprise que chegam à operação.</p></div>
-        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#como-funciona">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#contato">Contato</a></nav>
+        <div><strong>AirNex</strong><p>Soluções DJI Enterprise que chegam à operação.</p></div>
+        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#o-que-fazemos">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#contato">Contato</a></nav>
       </footer>
 
       <WhatsAppButton />

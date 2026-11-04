@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { FaInstagram } from 'react-icons/fa';
 
 const navItems = [
   ['Serviços', '#servicos'],
@@ -25,7 +26,7 @@ export function Navbar() {
 
   return (
     <header className="site-header">
-      <a href="#inicio" className="brand" aria-label="Início" onClick={closeMenu}><span className="brand-mark">AF</span><span>Aero Field</span></a>
+      <a href="#inicio" className="brand" aria-label="Início" onClick={closeMenu}><span className="brand-mark"><img src='/brandmark.png' alt='AirNex' /></span><span>AirNex</span></a>
       <button type="button" className="menu-toggle" aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={isOpen} aria-controls="site-navigation" onClick={() => setIsOpen((current) => !current)}><span /><span /><span /></button>
       <nav id="site-navigation" className={isOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Menu principal">
         {navItems.map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}</a>)}
