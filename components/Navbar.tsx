@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FaInstagram } from 'react-icons/fa';
 
 const navItems = [
   ['Serviços', '#servicos'],

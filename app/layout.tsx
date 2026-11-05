@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   description: 'Consultoria, capacitação e implantação para soluções DJI Enterprise.',
   icons: {
-    icon: '/logo2.png',
+    icon: '/logo2.png/',
     shortcut: '/logo2.png',
     apple: '/logo2.png',
   },
