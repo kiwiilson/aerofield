@@ -1,6 +1,15 @@
-import { ArrowRight, BadgeCheck, BookOpenCheck, Building2, ChartNoAxesCombined, ClipboardCheck, MonitorCloud, RadioTower, ShieldCheck, Wrench } from 'lucide-react'
+import { BadgeCheck, BookOpenCheck, Building2, ChartNoAxesCombined, ClipboardCheck, MonitorCloud, RadioTower, ShieldCheck, Wrench } from 'lucide-react'
+import Image from 'next/image'
+import { Applications } from '../components/Applications'
 import { ContactForm } from '../components/ContactForm'
+import { CountUp } from '../components/CountUp'
+import { Faq } from '../components/Faq'
+import { Hero } from '../components/Hero'
 import { Navbar } from '../components/Navbar'
+import { ProcessRail } from '../components/ProcessRail'
+import { Reveal } from '../components/Reveal'
+import { ScrollProgress } from '../components/ScrollProgress'
+import { SpotlightCard } from '../components/SpotlightCard'
 import { WhatsAppButton } from '../components/WhatsAppButton'
 import { FaInstagram } from 'react-icons/fa';
 
@@ -38,55 +47,46 @@ const services = [
   },
 ]
 
-const applications = [
-  ['Inspeção', 'Rotinas para ativos, estruturas, áreas remotas e ambientes com necessidade de evidência visual.'],
-  ['Mapeamento', 'Fluxos com captura, processamento e leitura dos dados para apoiar decisões técnicas.'],
-  ['Segurança patrimonial', 'Monitoramento aéreo, resposta visual e apoio a perímetros extensos ou pontos cegos.'],
-  ['Infraestrutura', 'Acompanhamento de obras, ativos, vias, redes, plantas e áreas operacionais críticas.'],
-  ['Indústria', 'Aplicações para operação, segurança, inspeção, documentação e melhoria de processos.'],
-  ['Agronegócio', 'Uso de drones e sensores para leitura de áreas, produtividade e acompanhamento técnico.'],
-]
-
 const products = [
   {
     name: 'DJI Dock 3',
     category: 'Operação remota',
-    image: '/media/dock3.jpg',
+    image: '/media/dock3.webp',
     text: 'Base para operações automatizadas e recorrentes, com foco em monitoramento, inspeção e resposta remota.',
   },
   {
     name: 'Matrice 4E',
     category: 'Mapeamento e inspeção',
-    image: '/media/matrice4e.jpg',
+    image: '/media/matrice4e.webp',
     text: 'Plataforma compacta para captura técnica, inspeções e aplicações que exigem precisão em campo.',
   },
   {
     name: 'Matrice 4T',
     category: 'Termal e segurança',
-    image: '/media/matrice4t.png',
+    image: '/media/matrice4t.webp',
     text: 'Solução versátil para segurança, busca, inspeção e cenários que combinam visão visual e termal.',
   },
   {
     name: 'Matrice 400',
     category: 'Operações complexas',
-    image: '/media/matrice400.jpg',
+    image: '/media/matrice400.webp',
     text: 'Equipamento para missões robustas, payloads avançados e operações de maior complexidade e exigência nos resultados.',
   },
   {
     name: 'Mavic 3M',
     category: 'Agronegócio',
-    image: '/media/mavic3m.jpg',
+    image: '/media/mavic3m.webp',
     text: 'Drone multispectral para leitura de áreas, acompanhamento agrícola e tomada de decisão baseada em dados.',
   },
   {
     name: 'Software e integrações',
     category: 'FlightHub 2 & DJI Terra',
-    image: '/media/software.jpg',
+    image: '/media/software.webp',
     text: 'Configuração, treinamento e integração de softwares para transformar voo, dados e gestão em rotina operacional.',
   },
 ]
 
-const steps = [
+const steps: readonly (readonly [string, string, string])[] = [
   ['01', 'Diagnóstico', 'Entendemos objetivo, cenário, equipe, risco e maturidade atual.'],
   ['02', 'Desenho da solução', 'Definimos tecnologia, processo, responsáveis e critérios de sucesso.'],
   ['03', 'Implantação', 'Apoiamos configuração, instalação, testes e documentação.'],
@@ -94,12 +94,12 @@ const steps = [
   ['05', 'Acompanhamento', 'Ajustamos a operação, resolvemos dúvidas e indicamos próximos passos.'],
 ]
 
-const proofNumbers = [
-  ['5+', 'anos de experiência acumulada'],
-  ['100+', 'treinamentos realizados'],
-  ['300+', 'pessoas capacitadas'],
-  ['30+', 'projetos privados implantados'],
-  ['10+', 'editais públicos escritos'],
+const proofNumbers: readonly (readonly [number, string])[] = [
+  [5, 'anos de experiência acumulada'],
+  [100, 'treinamentos realizados'],
+  [300, 'pessoas capacitadas'],
+  [30, 'projetos privados implantados'],
+  [10, 'editais públicos escritos'],
 ]
 
 const projects = [
@@ -115,28 +115,11 @@ const projects = [
 
 export default function Home() {
   return (
-    <main>
+    <main id="conteudo">
+      <ScrollProgress />
       <Navbar />
 
-      <section id="inicio" className="hero-shell">
-        <div className="hero-copy">
-          <p className="eyebrow">AirNex • DJI Enterprise na prática</p>
-          <h1>Do drone à operação.</h1>
-          <p className="hero-lead">Implantamos, capacitamos e apoiamos empresas que querem transformar drones, Dock e softwares DJI Enterprise em operação real, equipe preparada e oportunidade de negócio.</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href="#contato">Entre em contato <ArrowRight size={18} /></a>
-            <a className="button button-secondary" href="#servicos">Ver serviços</a>
-          </div>
-        </div>
-
-        <div className="hero-visual" aria-label="Vídeo de operação com DJI Dock">
-          <video src="/media/hero-dock.mp4" poster="/media/hero-poster.jpg" autoPlay muted loop playsInline />
-          <div className="hero-visual-panel">
-            <span>Operação assistida</span>
-            <strong>Implantação, treinamento e suporte para sair do equipamento e chegar ao processo.</strong>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <section id="servicos" className="services-section section-pad">
         <div className="section-heading compact">
@@ -163,43 +146,28 @@ export default function Home() {
         </div>
         <div className="products-grid">
           {products.map((product) => (
-            <article className="product-card" key={product.name}>
-              <div className="product-image"><img src={product.image} alt={product.name} /></div>
+            <SpotlightCard className="product-card" key={product.name}>
+              <div className="product-image"><Image src={product.image} alt={product.name} fill sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 380px" /></div>
               <div className="product-content"><span>{product.category}</span><h3>{product.name}</h3><p>{product.text}</p></div>
-            </article>
+            </SpotlightCard>
           ))}
         </div>
       </section>
 
-      <section id="aplicacoes" className="applications-section section-pad">
-        <div className="applications-intro">
-          <p className="eyebrow">Aplicações</p>
-          <h2>Onde drone vira resultado operacional.</h2>
-          <p>As aplicações mudam por setor, mas a lógica é a mesma: entender a dor, escolher a tecnologia certa, capacitar a equipe e criar processo.</p>
-        </div>
-        <div className="applications-grid">
-          {applications.map(([title, text]) => (
-            <article key={title}><h3>{title}</h3><p>{text}</p></article>
-          ))}
-        </div>
-      </section>
+      <Applications />
 
       <section id="o-que-fazemos" className="process-section section-pad">
         <div className="section-heading compact">
           <p className="eyebrow">O que fazemos</p>
           <h2>Um método simples para tirar a solução do papel.</h2>
         </div>
-        <div className="process-rail">
-          {steps.map(([number, title, text]) => (
-            <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>
-          ))}
-        </div>
+        <ProcessRail steps={steps} />
       </section>
 
       <section id="experiencia" className="proof-section section-pad">
         <div className="proof-head"><p className="eyebrow">Experiência</p><h2>Vivência real em treinamento, implantação e projetos.</h2></div>
         <div className="metrics-grid">
-          {proofNumbers.map(([number, label]) => <article className="metric-card" key={label}><strong>{number}</strong><span>{label}</span></article>)}
+          {proofNumbers.map(([number, label]) => <article className="metric-card" key={label}><CountUp value={number} suffix="+" /><span>{label}</span></article>)}
         </div>
         <div className="project-grid">
           {projects.map((project) => <article key={project.title}><BadgeCheck size={24} /><h3>{project.title}</h3><p>{project.text}</p></article>)}
@@ -213,10 +181,12 @@ export default function Home() {
           <p>A AirNex nasce para apoiar empresas que querem aplicar soluções DJI Enterprise com menos incerteza. Atuamos entre campo, software, treinamento e estratégia para transformar tecnologia em operação.</p>
         </div>
         <article className="founder-card">
-          <div className="founder-photo"><img src="/team/camila.jpg" alt="Camila Freitas, CEO da AirNex" /></div>
+          <Reveal className="founder-photo"><Image src="/team/camila.webp" alt="Camila Freitas, CEO da AirNex" fill sizes="(max-width: 640px) 260px, 230px" /></Reveal>
           <div><span>CEO</span><h3>Camila Freitas</h3><p>À frente da estratégia comercial e do relacionamento com clientes, conectando necessidade, proposta de valor e oportunidade.</p></div>
         </article>
       </section>
+
+      <Faq />
 
       <section id="contato" className="contact-section section-pad">
         <div className="contact-copy">
@@ -233,7 +203,7 @@ export default function Home() {
 
       <footer className="footer">
         <div><strong>AirNex</strong><p>Soluções DJI Enterprise que chegam à operação.</p></div>
-        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#o-que-fazemos">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#contato">Contato</a></nav>
+        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#o-que-fazemos">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#faq">FAQ</a><a href="#contato">Contato</a></nav>
       </footer>
 
       <WhatsAppButton />

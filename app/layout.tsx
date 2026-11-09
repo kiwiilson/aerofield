@@ -1,30 +1,64 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
+const sans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+})
+
+const siteUrl = 'https://www.airnex.com.br'
+const title = 'AirNex | Soluções DJI Enterprise'
+const description = 'Implantação, capacitação e suporte para soluções DJI Enterprise: Dock, Matrice e softwares. Do drone à operação.'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.airnex.com.br'),
+  metadataBase: new URL(siteUrl),
   alternates: { canonical: '/' },
-  title: 'AirNex | Soluções DJI Enterprise',
+  title,
+  description,
   openGraph: {
-    title: 'AirNex | Soluções DJI Enterprise',
-    description: 'Consultoria, capacitação e implantação para soluções DJI Enterprise.',
-    url: 'https://www.airnex.com.br',
+    title,
+    description,
+    url: siteUrl,
     siteName: 'AirNex',
     locale: 'pt_BR',
     type: 'website',
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'AirNex — Do drone à operação' }],
   },
-  description: 'Consultoria, capacitação e implantação para soluções DJI Enterprise.',
+  twitter: { card: 'summary_large_image', title, description, images: ['/og.jpg'] },
   icons: {
-    icon: '/logo2.png/',
+    icon: '/logo2.png',
     shortcut: '/logo2.png',
     apple: '/logo2.png',
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#11161c',
+}
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AirNex',
+  url: siteUrl,
+  logo: `${siteUrl}/logo2.png`,
+  description,
+  areaServed: 'BR',
+  sameAs: ['https://www.instagram.com/airnexsolutions/'],
+  contactPoint: [{ '@type': 'ContactPoint', contactType: 'sales', telephone: '+55-11-99190-8358', availableLanguage: 'pt-BR' }],
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body>{children}</body>
+    <html lang="pt-BR" className={sans.variable}>
+      <body>
+        <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+        <noscript><style>{'.reveal{clip-path:none!important}.reveal img{transform:none!important}'}</style></noscript>
+        {children}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+      </body>
     </html>
   )
 }
