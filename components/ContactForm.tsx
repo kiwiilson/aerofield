@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { formatWhatsapp, interests, states } from '../lib/contact'
 
 type FormState = {
@@ -29,14 +28,13 @@ const initialState: FormState = {
   message: '',
 }
 
-const stepFields: Field[][] = [
-  ['name', 'email', 'whatsapp'],
-  ['state', 'city', 'message'],
-]
-
+const validatedFields: Field[] = ['name', 'email', 'whatsapp', 'state', 'city', 'message']
 const whatsappUrl = 'https://wa.me/5511991908358'
 
-function validate(field: Field, value: string): string {
+// Compara cidades sem depender de acento ou caixa: "sao paulo" encontra "São Paulo".
+const normalize = (value: string) => value.normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase()
+
+function validate(field: Field, value: string, cities: string[]): string {
   const trimmed = value.trim()
   switch (field) {
     case 'name':
@@ -52,7 +50,9 @@ function validate(field: Field, value: string): string {
     case 'state':
       return trimmed ? '' : 'Selecione o estado.'
     case 'city':
-      return trimmed ? '' : 'Informe a cidade.'
+      if (!trimmed) return 'Informe a cidade.'
+      if (cities.length && !cities.some((city) => normalize(city) === normalize(trimmed))) return 'Não encontramos essa cidade neste estado. Escolha uma opção da lista.'
+      return ''
     case 'message':
       return trimmed.length > 2000 ? 'Use até 2000 caracteres.' : ''
     default:
@@ -63,7 +63,6 @@ function validate(field: Field, value: string): string {
 export function ContactForm() {
   const [form, setForm] = useState<FormState>(initialState)
   const [errors, setErrors] = useState<Errors>({})
-  const [step, setStep] = useState(0)
   const [cities, setCities] = useState<string[]>([])
   const [isLoadingCities, setIsLoadingCities] = useState(false)
   const [citiesFailed, setCitiesFailed] = useState(false)
@@ -102,55 +101,38 @@ export function ContactForm() {
 
   function update(field: Field, value: string) {
     setForm((current) => (field === 'state' ? { ...current, state: value, city: '' } : { ...current, [field]: value }))
-    if (errors[field]) setErrors((current) => ({ ...current, [field]: validate(field, value) }))
+    if (field === 'state') setErrors((current) => ({ ...current, state: validate('state', value, []), city: undefined }))
+    else if (errors[field]) setErrors((current) => ({ ...current, [field]: validate(field, value, cities) }))
   }
 
   function blur(field: Field) {
-    setErrors((current) => ({ ...current, [field]: validate(field, form[field]) }))
-  }
-
-  function focusField(field: Field) {
-    window.setTimeout(() => document.getElementById(`field-${field}`)?.focus(), 0)
-  }
-
-  function goNext() {
-    const found: Errors = {}
-    stepFields[0].forEach((field) => {
-      const message = validate(field, form[field])
-      if (message) found[field] = message
-    })
-    setErrors((current) => ({ ...current, ...found }))
-    const firstInvalid = stepFields[0].find((field) => found[field])
-    if (firstInvalid) {
-      focusField(firstInvalid)
-      return
+    // Ao sair do campo de cidade, troca o que foi digitado pelo nome oficial da lista (com acento e caixa corretos).
+    if (field === 'city') {
+      const match = cities.find((city) => normalize(city) === normalize(form.city))
+      if (match && match !== form.city) {
+        setForm((current) => ({ ...current, city: match }))
+        setErrors((current) => ({ ...current, city: undefined }))
+        return
+      }
     }
-    setStep(1)
-    focusField('state')
-  }
-
-  function goBack() {
-    setStep(0)
-    focusField('name')
+    setErrors((current) => ({ ...current, [field]: validate(field, form[field], cities) }))
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (step === 0) {
-      goNext()
-      return
-    }
+
+    const city = cities.find((item) => normalize(item) === normalize(form.city)) ?? form.city.trim()
+    const values = { ...form, city }
 
     const found: Errors = {}
-    ;(['name', 'email', 'whatsapp', 'state', 'city', 'message'] as Field[]).forEach((field) => {
-      const message = validate(field, form[field])
+    validatedFields.forEach((field) => {
+      const message = validate(field, values[field], cities)
       if (message) found[field] = message
     })
     setErrors(found)
-    const firstInvalid = (Object.keys(found) as Field[])[0]
+    const firstInvalid = validatedFields.find((field) => found[field])
     if (firstInvalid) {
-      if (stepFields[0].includes(firstInvalid)) setStep(0)
-      focusField(firstInvalid)
+      document.getElementById(`field-${firstInvalid}`)?.focus()
       return
     }
 
@@ -162,8 +144,8 @@ export function ContactForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...form,
-          state_name: states.find(([abbreviation]) => abbreviation === form.state)?.[1] ?? '',
+          ...values,
+          state_name: states.find(([abbreviation]) => abbreviation === values.state)?.[1] ?? '',
           website: honeypot,
         }),
       })
@@ -171,7 +153,8 @@ export function ContactForm() {
       if (!response.ok) throw new Error(data.error || 'Não conseguimos enviar agora.')
       setStatus('success')
       setForm(initialState)
-      setStep(0)
+      setErrors({})
+      setCities([])
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Não conseguimos enviar agora.')
       setStatus('error')
@@ -207,89 +190,76 @@ export function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      <div className="form-steps" aria-hidden="true">
-        <span className="is-on" /><span className={step === 1 ? 'is-on' : ''} />
-      </div>
-      <p className="form-step-label" aria-live="polite">Etapa {step + 1} de 2 · {step === 0 ? 'Como falar com você' : 'Sobre o seu projeto'}</p>
-
       <input className="hp-field" tabIndex={-1} autoComplete="off" aria-hidden="true" name="website" value={honeypot} onChange={(event) => setHoneypot(event.target.value)} />
 
-      {step === 0 && (
-        <div className="form-panel" key="step-1">
-          <div className="form-grid">
-            <label>
-              Nome
-              <input {...fieldProps('name')} autoComplete="name" required value={form.name} onChange={(event) => update('name', event.target.value)} onBlur={() => blur('name')} />
-              {error('name')}
-            </label>
+      <div className="form-grid">
+        <label>
+          Nome
+          <input {...fieldProps('name')} autoComplete="name" required value={form.name} onChange={(event) => update('name', event.target.value)} onBlur={() => blur('name')} />
+          {error('name')}
+        </label>
 
-            <label>
-              <span>Empresa <small>(opcional)</small></span>
-              <input id="field-company" autoComplete="organization" value={form.company} onChange={(event) => update('company', event.target.value)} />
-            </label>
+        <label>
+          <span>Empresa <small>(opcional)</small></span>
+          <input id="field-company" autoComplete="organization" value={form.company} onChange={(event) => update('company', event.target.value)} />
+        </label>
 
-            <label>
-              E-mail
-              <input {...fieldProps('email')} type="email" inputMode="email" autoComplete="email" required value={form.email} onChange={(event) => update('email', event.target.value)} onBlur={() => blur('email')} />
-              {error('email')}
-            </label>
+        <label>
+          E-mail
+          <input {...fieldProps('email')} type="email" inputMode="email" autoComplete="email" required value={form.email} onChange={(event) => update('email', event.target.value)} onBlur={() => blur('email')} />
+          {error('email')}
+        </label>
 
-            <label>
-              <span>WhatsApp <small>(opcional)</small></span>
-              <input {...fieldProps('whatsapp')} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="(11) 99999-9999" value={form.whatsapp} onChange={(event) => update('whatsapp', formatWhatsapp(event.target.value))} onBlur={() => blur('whatsapp')} />
-              {error('whatsapp')}
-            </label>
-          </div>
-          <button type="button" onClick={goNext}>Continuar <ArrowRight size={18} aria-hidden="true" /></button>
-        </div>
-      )}
+        <label>
+          <span>WhatsApp <small>(opcional)</small></span>
+          <input {...fieldProps('whatsapp')} type="tel" inputMode="tel" autoComplete="tel-national" placeholder="(11) 99999-9999" value={form.whatsapp} onChange={(event) => update('whatsapp', formatWhatsapp(event.target.value))} onBlur={() => blur('whatsapp')} />
+          {error('whatsapp')}
+        </label>
 
-      {step === 1 && (
-        <div className="form-panel" key="step-2">
-          <div className="form-grid">
-            <label>
-              Estado
-              <select {...fieldProps('state')} required value={form.state} onChange={(event) => update('state', event.target.value)} onBlur={() => blur('state')}>
-                <option value="">Selecione o estado</option>
-                {states.map(([abbreviation, name]) => <option key={abbreviation} value={abbreviation}>{name}</option>)}
-              </select>
-              {error('state')}
-            </label>
+        <label>
+          Estado
+          <select {...fieldProps('state')} required value={form.state} onChange={(event) => update('state', event.target.value)} onBlur={() => blur('state')}>
+            <option value="">Selecione o estado</option>
+            {states.map(([abbreviation, name]) => <option key={abbreviation} value={abbreviation}>{name}</option>)}
+          </select>
+          {error('state')}
+        </label>
 
-            <label>
-              Cidade
-              {citiesFailed ? (
-                <input {...fieldProps('city')} autoComplete="address-level2" required placeholder="Digite sua cidade" value={form.city} onChange={(event) => update('city', event.target.value)} onBlur={() => blur('city')} />
-              ) : (
-                <select {...fieldProps('city')} required value={form.city} onChange={(event) => update('city', event.target.value)} onBlur={() => blur('city')} disabled={!form.state || isLoadingCities}>
-                  <option value="">{!form.state ? 'Selecione o estado primeiro' : isLoadingCities ? 'Carregando cidades...' : 'Selecione a cidade'}</option>
-                  {cities.map((city) => <option key={city} value={city}>{city}</option>)}
-                </select>
-              )}
-              {citiesFailed && <small>Não carregamos a lista de cidades. Digite o nome da sua cidade.</small>}
-              {error('city')}
-            </label>
+        <label>
+          Cidade
+          <input
+            {...fieldProps('city')}
+            list={citiesFailed ? undefined : 'city-options'}
+            autoComplete="off"
+            required
+            disabled={!form.state}
+            placeholder={!form.state ? 'Selecione o estado primeiro' : isLoadingCities ? 'Carregando cidades...' : 'Digite ou escolha a cidade'}
+            value={form.city}
+            onChange={(event) => update('city', event.target.value)}
+            onBlur={() => blur('city')}
+          />
+          <datalist id="city-options">
+            {cities.map((city) => <option key={city} value={city} />)}
+          </datalist>
+          {citiesFailed && <small>Não carregamos a lista de cidades. Digite o nome da sua cidade.</small>}
+          {error('city')}
+        </label>
 
-            <label className="form-wide">
-              Interesse
-              <select id="field-interest" value={form.interest} onChange={(event) => update('interest', event.target.value)}>
-                {interests.map((interest) => <option key={interest}>{interest}</option>)}
-              </select>
-            </label>
-          </div>
+        <label className="form-wide">
+          Interesse
+          <select id="field-interest" value={form.interest} onChange={(event) => update('interest', event.target.value)}>
+            {interests.map((interest) => <option key={interest}>{interest}</option>)}
+          </select>
+        </label>
 
-          <label>
-            <span>Mensagem <small>(opcional)</small></span>
-            <textarea {...fieldProps('message')} rows={4} value={form.message} onChange={(event) => update('message', event.target.value)} placeholder="Conte rapidamente o que você busca." />
-            {error('message')}
-          </label>
+        <label className="form-wide">
+          <span>Mensagem <small>(opcional)</small></span>
+          <textarea {...fieldProps('message')} rows={4} value={form.message} onChange={(event) => update('message', event.target.value)} placeholder="Conte rapidamente o que você busca." />
+          {error('message')}
+        </label>
+      </div>
 
-          <div className="form-actions">
-            <button type="button" className="button-ghost" onClick={goBack}><ArrowLeft size={18} aria-hidden="true" /> Voltar</button>
-            <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Enviando...' : 'Enviar contato'}</button>
-          </div>
-        </div>
-      )}
+      <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Enviando...' : 'Enviar contato'}</button>
 
       {status === 'error' && <p className="form-error" role="alert">{submitError} <a href={whatsappUrl} target="_blank" rel="noreferrer">Falar pelo WhatsApp</a></p>}
     </form>

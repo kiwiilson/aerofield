@@ -1,11 +1,11 @@
 const faqs = [
   {
     question: 'O que acontece no diagnóstico?',
-    answer: 'É a primeira conversa. Entendemos seu objetivo, o cenário de operação, a equipe, os riscos e o nível de maturidade atual. Com isso, indicamos se faz sentido seguir por implantação, suporte, capacitação ou desenvolvimento de mercado.',
+    answer: 'É a primeira conversa. Entendemos seu objetivo, o cenário de operação, a equipe, os riscos e o nível de maturidade atual. Com isso, conseguimos indicar o melhor caminho para sua empresa, seja iniciar no mundo dos drones, aprimorar uma operação já existente ou apoiar em vendas, entre outras frentes que temos dentro da AirNex.',
   },
   {
     question: 'Como funciona a implantação de uma solução com DJI Dock?',
-    answer: 'O AirNex Deploy cobre planejamento, configuração, instalação assistida, testes, documentação e treinamento inicial, para que a operação saia do equipamento e chegue a uma rotina real e segura.',
+    answer: 'O AirNex Deploy cobre planejamento, configuração, instalação assistida, testes, documentação e treinamento inicial, para que a operação saia do papel e chegue a uma rotina real e segura.',
   },
   {
     question: 'Vocês oferecem treinamento?',
@@ -13,11 +13,11 @@ const faqs = [
   },
   {
     question: 'E depois da implantação, há suporte?',
-    answer: 'O AirNex Care acompanha a operação para reduzir paradas, organizar rotinas, orientar manutenção, apoiar seguros e manter equipamentos, softwares e equipes prontos para operar.',
+    answer: 'O AirNex Care acompanha a operação para reduzir paradas, organizar rotinas, orientar manutenção, acompanhar apólices de seguro e manter equipamentos, softwares e equipes sempre prontos para operar.',
   },
   {
     question: 'Para quais setores a AirNex atua?',
-    answer: 'Inspeção, mapeamento, segurança patrimonial, infraestrutura, indústria e agronegócio. A lógica é a mesma em todos: entender a dor, escolher a tecnologia certa, capacitar a equipe e criar processo.',
+    answer: 'Inspeção, mapeamento, segurança patrimonial, infraestrutura, indústria e agronegócio, seja integrador, distribuidor ou cliente final. A lógica é a mesma em todos: entender a dor, escolher o caminho certo, capacitar e criar processo.',
   },
 ]
 

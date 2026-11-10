@@ -62,7 +62,7 @@ function Telemetry({ paused }: { paused: boolean }) {
     ['Altitude', `${altitude} m`],
     ['Velocidade', `${speed} m/s`],
     ['Bateria', `${battery}%`],
-    ['Enlace', `${link}%`],
+    ['Conexão', `${link}%`],
   ]
 
   return (
@@ -73,7 +73,7 @@ function Telemetry({ paused }: { paused: boolean }) {
           <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
         ))}
       </dl>
-      <small>Exemplo ilustrativo de operação com Dock</small>
+      <small>Exemplo da telemetria durante operação</small>
     </aside>
   )
 }
@@ -130,7 +130,7 @@ export function Hero() {
           <RotatingWord paused={paused} />
           <p className="hero-lead">Implantamos, capacitamos e apoiamos empresas que querem transformar drones, Dock e softwares DJI Enterprise em operação real, equipe preparada e oportunidade de negócio.</p>
           <div className="hero-actions">
-            <a ref={ctaRef} className="button button-primary" href="#contato" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>Agendar diagnóstico <ArrowRight size={18} aria-hidden="true" /></a>
+            <a ref={ctaRef} className="button button-primary" href="#contato" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>Entrar em Contato <ArrowRight size={18} aria-hidden="true" /></a>
             <a className="button button-secondary" href="#servicos">Ver serviços</a>
           </div>
         </div>

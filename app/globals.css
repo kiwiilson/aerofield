@@ -242,19 +242,14 @@ button:disabled { opacity: .65; cursor: not-allowed; }
 
 /* Formulário em 2 etapas */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.form-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
-.form-steps span { height: 4px; border-radius: 999px; background: var(--color-border); transition: background var(--motion-standard) var(--ease-out); }
-.form-steps span.is-on { background: var(--color-action); }
-.form-step-label { margin: 0 0 18px; color: var(--color-muted); font-size: 13px; font-weight: 800; letter-spacing: .04em; }
-.form-panel { animation: caption-in 280ms var(--ease-out) both; }
 .contact-form label small { color: var(--color-muted); font-weight: 600; }
 .form-wide { grid-column: 1 / -1; }
+.form-wide textarea { margin-bottom: 0; }
 .field-error { color: #b8322a; font-size: 13px; font-weight: 700; }
 input[aria-invalid='true'], select[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: #b8322a; }
 .contact-form button:not(.button-ghost) { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .button-ghost { width: auto; min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: transparent; color: var(--color-ink); font: inherit; font-weight: 800; cursor: pointer; }
 .button-ghost:hover { background: rgba(21,23,25,.05); }
-.form-actions { display: grid; grid-template-columns: auto 1fr; gap: 12px; }
 .form-error a { text-decoration: underline; font-weight: 800; }
 .form-done { display: grid; justify-items: start; gap: 6px; color: var(--color-ink); }
 .form-done svg { color: #1b7a4b; margin-bottom: 6px; }
@@ -268,7 +263,7 @@ input[aria-invalid='true'], select[aria-invalid='true'], textarea[aria-invalid='
 
 /* FAQ */
 .faq-section { background: var(--color-surface); }
-.faq-list { max-width: 860px; display: grid; gap: 10px; }
+.faq-list { max-width: 860px; display: grid; gap: 10px; center-items: start; margin: 0 auto;  }
 .faq-list details { border: 1px solid var(--color-border); border-radius: 20px; background: #fbfaf7; transition: background var(--motion-standard) var(--ease-out), border-color var(--motion-standard) var(--ease-out); }
 .faq-list details[open] { background: #fff; border-color: rgba(23,111,208,.4); }
 .faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 14px 22px; cursor: pointer; font-size: 18px; font-weight: 800; list-style: none; }
