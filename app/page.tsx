@@ -14,7 +14,7 @@ import { WhatsAppButton } from '../components/WhatsAppButton'
 import { FaInstagram } from 'react-icons/fa';
 
 
-const whatsappUrl = 'https://wa.me/5511991908358'
+const whatsappUrl = 'https://wa.me/5511927297968'
 
 const services = [
   {
@@ -181,7 +181,7 @@ export default function Home() {
           <p>A AirNex nasce para apoiar empresas que querem aplicar soluções DJI Enterprise com menos incerteza. Atuamos entre campo, software, treinamento e estratégia para transformar tecnologia em operação.</p>
         </div>
         <article className="founder-card">
-          <Reveal className="founder-photo"><Image src="/team/camila.webp" alt="Camila Freitas, CEO da AirNex" fill sizes="(max-width: 640px) 260px, 230px" /></Reveal>
+          <Reveal className="founder-photo"><Image src="/team/camila.jpeg" alt="Camila Freitas, CEO da AirNex" fill sizes="(max-width: 640px) 260px, 230px" /></Reveal>
           <div><span>CEO</span><h3>Camila Freitas</h3><p>À frente da estratégia comercial e do relacionamento com clientes, conectando necessidade, proposta de valor e oportunidade.</p></div>
         </article>
       </section>

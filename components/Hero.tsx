@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Pause, Play } from 'lucide-react'
 
 const rotatingWords = ['inspeção', 'segurança patrimonial', 'mapeamento', 'infraestrutura', 'agronegócio']
-const headlineWords = ['Do', 'drone', 'à', 'operação.']
+const headlineWords = ['Tecnologia no ', 'ar, operação no controle']
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -116,7 +116,7 @@ export function Hero() {
 
       <div className="hero-copy">
         <p className="eyebrow hero-in" style={{ '--d': '0ms' } as React.CSSProperties}>AirNex • DJI Enterprise na prática</p>
-        <h1 aria-label="Do drone à operação.">
+        <h1 aria-label="Tecnologia no ar, operação no controle.">
           {headlineWords.map((word, position) => (
             <span key={word}>
               <span className="word-mask" aria-hidden="true">

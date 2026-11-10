@@ -50,7 +50,7 @@ export function Navbar() {
       <button type="button" className="menu-toggle" aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={isOpen} aria-controls="site-navigation" onClick={() => setIsOpen((current) => !current)}><span /><span /><span /></button>
       <nav id="site-navigation" className={isOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Menu principal">
         {navItems.map(([label, href]) => <a key={href} href={href} onClick={closeMenu} aria-current={activeId === href.slice(1) ? 'true' : undefined}>{label}</a>)}
-        <a className="nav-action" href="https://wa.me/5511991908358" target="_blank" rel="noreferrer" onClick={closeMenu}>Fale conosco</a>
+        <a className="nav-action" href="https://wa.me/5511927297968" target="_blank" rel="noreferrer" onClick={closeMenu}>Fale conosco</a>
       </nav>
     </header>
   )

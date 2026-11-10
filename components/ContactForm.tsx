@@ -29,7 +29,7 @@ const initialState: FormState = {
 }
 
 const validatedFields: Field[] = ['name', 'email', 'whatsapp', 'state', 'city', 'message']
-const whatsappUrl = 'https://wa.me/5511991908358'
+const whatsappUrl = 'https://wa.me/5511927297968'
 
 // Compara cidades sem depender de acento ou caixa: "sao paulo" encontra "São Paulo".
 const normalize = (value: string) => value.normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase()
