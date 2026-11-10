@@ -8,6 +8,7 @@ const navItems = [
   ['Aplicações', '#aplicacoes'],
   ['O que Fazemos', '#o-que-fazemos'],
   ['Quem Somos', '#quem-somos'],
+  ['FAQ', '#faq'],
   ['Contato', '#contato'],
 ]
 
@@ -45,7 +46,7 @@ export function Navbar() {
 
   return (
     <header className="site-header">
-      <a href="#inicio" className="brand" aria-label="Início" onClick={closeMenu}><span className="brand-mark"><img src='/brandmark.png' alt='AirNex' /></span><span>AirNex</span></a>
+      <a href="#inicio" className="brand" aria-label="Início" onClick={closeMenu}><span className="brand-mark"><img src="/brandmark.png" alt="" width={44} height={44} /></span><span>AirNex</span></a>
       <button type="button" className="menu-toggle" aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={isOpen} aria-controls="site-navigation" onClick={() => setIsOpen((current) => !current)}><span /><span /><span /></button>
       <nav id="site-navigation" className={isOpen ? 'site-nav is-open' : 'site-nav'} aria-label="Menu principal">
         {navItems.map(([label, href]) => <a key={href} href={href} onClick={closeMenu} aria-current={activeId === href.slice(1) ? 'true' : undefined}>{label}</a>)}

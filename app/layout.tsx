@@ -28,9 +28,12 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', title, description, images: ['/og.jpg'] },
   icons: {
-    icon: '/logo2.png',
-    shortcut: '/logo2.png',
-    apple: '/logo2.png',
+    icon: [
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/icon-192.png',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
 }
 
@@ -43,7 +46,7 @@ const organizationJsonLd = {
   '@type': 'Organization',
   name: 'AirNex',
   url: siteUrl,
-  logo: `${siteUrl}/logo2.png`,
+  logo: `${siteUrl}/icon-512.png`,
   description,
   areaServed: 'BR',
   sameAs: ['https://www.instagram.com/airnexsolutions/'],
