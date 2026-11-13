@@ -203,7 +203,7 @@ export default function Home() {
 
       <footer className="footer">
         <div><strong>AirNex</strong><p>Soluções DJI Enterprise que chegam à operação.</p></div>
-        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#o-que-fazemos">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#faq">FAQ</a><a href="#contato">Contato</a></nav>
+        <nav aria-label="Links do rodapé"><a href="#servicos">Serviços</a><a href="#produtos">Produtos</a><a href="#aplicacoes">Aplicações</a><a href="#o-que-fazemos">O Que Fazemos</a><a href="#quem-somos">Quem Somos</a><a href="#faq">FAQ</a><a href="#contato">Contato</a><a href="https://portal.airnex.com.br">Área do cliente</a></nav>
       </footer>
 
       <WhatsAppButton />
